@@ -79,6 +79,17 @@ install_bun() {
   ok "bun installed"
 }
 
+install_roamgate() {
+  if have roamgate; then
+    ok "roamgate already installed"
+    return
+  fi
+  curl -fsSL \
+    https://github.com/powerfooI/roamgate/releases/latest/download/install-roamgate.sh |
+    ROAMGATE_VERSION= sh
+  ok "roamgate installed"
+}
+
 install_nerd_font() {
   local dir="$HOME/.local/share/fonts"
   if fc-list 2>/dev/null | grep -qi "JetBrainsMono Nerd Font"; then
@@ -182,6 +193,7 @@ main() {
   install_starship
   install_fnm
   install_bun
+  install_roamgate
   install_nerd_font
 
   info ""
