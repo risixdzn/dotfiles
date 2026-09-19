@@ -192,6 +192,7 @@ main() {
   info "${bold}herdr plugins${reset}"
   install_herdr_automatic_rename
   install_herdr_plugin "hhdebb/herdr-radar" "herdr-radar"
+  install_herdr_plugin "alexarthurs/herdr-sidebar/plugins/herdr-sidebar" "herdr-sidebar"
 
   info ""
   info "${bold}not handled here, install manually if you want them${reset}"
