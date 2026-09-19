@@ -83,11 +83,16 @@ set -gx SOME_API_KEY "..."
 ## Tools
 
 Installed by `bootstrap.sh`: fish, git, curl, bat, eza, fzf, zoxide, ripgrep,
-btop, unzip, starship, fnm, bun, JetBrainsMono Nerd Font.
+btop, unzip, jq, starship, fnm, bun, JetBrainsMono Nerd Font.
 
 Installed manually: [ghostty](https://ghostty.org/download),
 [herdr](https://github.com/herdrdev/herdr/releases),
 [zed](https://zed.dev).
+
+If `herdr` is already on `PATH`, `bootstrap.sh` also installs the
+[herdr-automatic-rename](https://github.com/qu8n/herdr-automatic-rename)
+plugin (live tab naming) and wires its fish hook. Since `herdr` itself is
+manual, install it first and re-run `bootstrap.sh` to pick this up.
 
 ## Making fish the login shell
 

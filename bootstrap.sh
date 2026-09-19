@@ -27,6 +27,7 @@ APT_PACKAGES=(
   btop        # system monitor
   fontconfig
   unzip
+  jq          # needed by the herdr-automatic-rename plugin
 )
 
 install_apt() {
@@ -95,6 +96,16 @@ install_nerd_font() {
   ok "JetBrainsMono Nerd Font installed"
 }
 
+install_herdr_automatic_rename() {
+  if ! have herdr; then
+    warn "herdr not installed, skipping herdr-automatic-rename (install herdr, then re-run bootstrap.sh)"
+    return
+  fi
+  # Idempotent: safe to re-run, it no-ops if the plugin and hook are already there.
+  curl -fsSL https://raw.githubusercontent.com/qu8n/herdr-automatic-rename/main/install.sh | bash -s -- fish
+  ok "herdr-automatic-rename installed"
+}
+
 set_login_shell() {
   local fish_path current_shell
   fish_path="$(command -v fish || true)"
@@ -159,6 +170,10 @@ main() {
   info ""
   info "${bold}setting login shell${reset}"
   set_login_shell
+
+  info ""
+  info "${bold}herdr plugins${reset}"
+  install_herdr_automatic_rename
 
   info ""
   info "${bold}not handled here, install manually if you want them${reset}"

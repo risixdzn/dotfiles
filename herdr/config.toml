@@ -3,6 +3,8 @@ onboarding = false
 [terminal]
 default_shell = "fish"
 
+[ui]
+prompt_new_tab_name = false
 
 [ui.sidebar.agents]
 row_gap = 1

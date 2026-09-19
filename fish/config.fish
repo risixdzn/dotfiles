@@ -26,3 +26,8 @@ end
 
 # Machine specific overrides, never committed
 test -f $__fish_config_dir/local.fish; and source $__fish_config_dir/local.fish
+
+# herdr-automatic-rename: live tab naming hook
+for _f in $HOME/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.fish
+    test -r "$_f"; and source "$_f"; and break
+end
