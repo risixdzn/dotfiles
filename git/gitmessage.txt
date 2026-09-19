@@ -1,0 +1,15 @@
+# Common commit types (Conventional Commits):
+
+# `feat(scope):`     add a new feature
+# `fix(scope):`      fix a bug
+# `docs(scope):`     update documentation
+# `style(scope):`    code style change (formatting, missing semicolons, etc)
+# `refactor(scope):` code refactor without adding features or fixing bugs
+# `perf(scope):`     improve performance
+# `test(scope):`     add or update tests
+# `chore(scope):`    maintenance tasks, deps, build scripts
+# `revert(scope):`   revert a previous commit
+
+# Example:
+# `feat(auth): add login with google`
+

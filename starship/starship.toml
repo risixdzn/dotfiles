@@ -1,0 +1,4 @@
+# Starship prompt: https://starship.rs/config/
+# Run `starship explain` to see what the current prompt is rendering.
+
+add_newline = false

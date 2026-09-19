@@ -1,0 +1,28 @@
+[user]
+	name = Ricardo Amorim
+	email = 102877738+risixdzn@users.noreply.github.com
+
+[credential]
+	helper = store
+
+[commit]
+	template = ~/.gitmessage.txt
+
+[core]
+	editor = zed --wait
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[push]
+	autoSetupRemote = true
+
+[diff]
+	colorMoved = default
+
+# Machine specific overrides, never committed. Missing file is ignored.
+[include]
+	path = ~/.gitconfig.local

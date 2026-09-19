@@ -1,0 +1,11 @@
+onboarding = false
+
+[terminal]
+default_shell = "fish"
+
+
+[ui.sidebar.agents]
+row_gap = 1
+
+[ui.sidebar.spaces]
+row_gap = 1

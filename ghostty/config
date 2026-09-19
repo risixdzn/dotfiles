@@ -1,0 +1,13 @@
+# Ghostty: https://ghostty.org/docs/config
+
+command = /usr/bin/fish --login --interactive
+shell-integration = fish
+
+theme = Vesper
+font-family = JetBrainsMono Nerd Font
+
+mouse-scroll-multiplier = 0.5
+
+window-decoration = true
+window-padding-x = 8
+window-padding-y = 8
