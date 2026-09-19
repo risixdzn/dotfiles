@@ -9,3 +9,4 @@ fish_add_path -gP $HOME/.local/share/fnm
 fish_add_path -gP $BUN_INSTALL/bin
 fish_add_path -gP $HOME/.nub/bin
 fish_add_path -gP $PNPM_HOME
+fish_add_path -gP $HOME/.cargo/bin
