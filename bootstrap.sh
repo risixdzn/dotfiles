@@ -100,8 +100,8 @@ install_rust() {
   # not by rustup editing shell rc files.
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |
     sh -s -- -y --no-modify-path --default-toolchain stable --profile minimal
-  # So herdr plugin builds later in this run (e.g. herdr-sidebar on arches
-  # without a prebuilt binary) can find cargo/rustc immediately.
+  # So herdr plugin builds later in this run (on arches without a prebuilt
+  # binary) can find cargo/rustc immediately.
   export PATH="$HOME/.cargo/bin:$PATH"
   ok "rust installed"
 }
@@ -231,7 +231,6 @@ main() {
   info "${bold}herdr plugins${reset}"
   install_herdr_automatic_rename
   install_herdr_plugin "hhdebb/herdr-radar" "herdr-radar"
-  install_herdr_plugin "alexarthurs/herdr-sidebar/plugins/herdr-sidebar" "herdr-sidebar"
 
   info ""
   info "${bold}not handled here, install manually if you want them${reset}"
