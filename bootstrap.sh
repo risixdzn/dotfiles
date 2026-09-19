@@ -28,6 +28,7 @@ APT_PACKAGES=(
   fontconfig
   unzip
   jq          # needed by the herdr-automatic-rename plugin
+  build-essential  # provides cc, needed to build Rust herdr plugins from source
 )
 
 install_apt() {
@@ -88,6 +89,21 @@ install_roamgate() {
     https://github.com/powerfooI/roamgate/releases/latest/download/install-roamgate.sh |
     ROAMGATE_VERSION= sh
   ok "roamgate installed"
+}
+
+install_rust() {
+  if have rustc && have cargo; then
+    ok "rust $(rustc --version | awk '{print $2}')"
+    return
+  fi
+  # --no-modify-path: PATH is managed centrally in fish/conf.d/path.fish,
+  # not by rustup editing shell rc files.
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |
+    sh -s -- -y --no-modify-path --default-toolchain stable --profile minimal
+  # So herdr plugin builds later in this run (e.g. herdr-sidebar on arches
+  # without a prebuilt binary) can find cargo/rustc immediately.
+  export PATH="$HOME/.cargo/bin:$PATH"
+  ok "rust installed"
 }
 
 install_nerd_font() {
@@ -205,6 +221,7 @@ main() {
   install_bun
   install_roamgate
   install_nerd_font
+  install_rust
 
   info ""
   info "${bold}setting login shell${reset}"
