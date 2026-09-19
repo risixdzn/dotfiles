@@ -113,8 +113,12 @@ install_herdr_automatic_rename() {
     return
   fi
   # Idempotent: safe to re-run, it no-ops if the plugin and hook are already there.
-  curl -fsSL https://raw.githubusercontent.com/qu8n/herdr-automatic-rename/main/install.sh | bash -s -- fish
-  ok "herdr-automatic-rename installed"
+  # Not `set -e` fatal, same reasoning as install_herdr_plugin below.
+  if curl -fsSL https://raw.githubusercontent.com/qu8n/herdr-automatic-rename/main/install.sh | bash -s -- fish; then
+    ok "herdr-automatic-rename installed"
+  else
+    warn "herdr-automatic-rename failed to install, see the error above"
+  fi
 }
 
 # $1: repo (owner/repo, optionally with a subpath to the plugin)
@@ -130,8 +134,14 @@ install_herdr_plugin() {
     ok "$plugin_id already installed"
     return
   fi
-  herdr plugin install "$repo" --yes
-  ok "$plugin_id installed"
+  # Not `set -e` fatal: a plugin can fail to build on this arch (e.g. no
+  # prebuilt binary + no Rust toolchain) without taking down the rest of
+  # bootstrap.sh with it.
+  if herdr plugin install "$repo" --yes; then
+    ok "$plugin_id installed"
+  else
+    warn "$plugin_id failed to install, see the error above"
+  fi
 }
 
 set_login_shell() {
