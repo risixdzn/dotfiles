@@ -111,15 +111,16 @@ revert_shell() {
     return
   fi
 
+  # See bootstrap.sh's set_login_shell for why sudo comes before plain chsh.
   if [[ $EUID -eq 0 ]]; then
     run chsh -s "$prev_shell" "$(id -un)"
-  elif [[ -t 0 && -t 1 ]]; then
-    info "  setting login shell back to $prev_shell, you may be asked for your password"
-    run chsh -s "$prev_shell"
   elif command -v sudo >/dev/null 2>&1; then
     run sudo chsh -s "$prev_shell" "$(id -un)"
+  elif [[ -t 0 && -t 1 ]]; then
+    info "  setting login shell back to $prev_shell, you may be asked for your account password"
+    run chsh -s "$prev_shell"
   else
-    warn "no tty and no sudo, can't revert login shell non-interactively"
+    warn "no sudo and no tty, can't revert login shell non-interactively"
     return
   fi
 

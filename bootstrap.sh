@@ -126,15 +126,20 @@ set_login_shell() {
     fi
   fi
 
+  # Prefer sudo over plain chsh: chsh normally authenticates via the
+  # invoking account's own password, which cloud-init users (e.g. "ubuntu")
+  # usually don't have set at all (account is locked, SSH key + sudo only)
+  # - that PAM check can never succeed. Routing through sudo instead runs
+  # chsh as root, which skips that check entirely.
   if [[ $EUID -eq 0 ]]; then
     chsh -s "$fish_path" "$(id -un)"
-  elif [[ -t 0 && -t 1 ]]; then
-    info "  setting login shell to fish, you may be asked for your password"
-    chsh -s "$fish_path"
   elif have sudo; then
     sudo chsh -s "$fish_path" "$(id -un)"
+  elif [[ -t 0 && -t 1 ]]; then
+    info "  setting login shell to fish, you may be asked for your account password"
+    chsh -s "$fish_path"
   else
-    warn "no tty and no sudo, can't run chsh non-interactively"
+    warn "no sudo and no tty, can't run chsh non-interactively"
     return
   fi
   ok "login shell set to fish (takes effect on next login)"
