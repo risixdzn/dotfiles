@@ -51,8 +51,13 @@ install_starship() {
     ok "starship $(starship --version | head -1 | awk '{print $2}')"
     return
   fi
-  curl -sS https://starship.rs/install.sh | sh -s -- --yes
-  ok "starship installed"
+  # --bin-dir keeps this in ~/.local/bin, so the installer never needs sudo.
+  # Its default (/usr/local/bin) escalates via a bare `sudo -v`, which some
+  # sudoers setups (e.g. NOPASSWD:ALL alongside a password-required group
+  # rule) refuse even though `sudo -n` works fine.
+  mkdir -p "$HOME/.local/bin"
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
+  ok "starship installed to ~/.local/bin"
 }
 
 install_fnm() {
