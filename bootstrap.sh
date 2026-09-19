@@ -106,6 +106,23 @@ install_herdr_automatic_rename() {
   ok "herdr-automatic-rename installed"
 }
 
+# $1: repo (owner/repo, optionally with a subpath to the plugin)
+# $2: plugin_id as `herdr plugin list --json` reports it
+install_herdr_plugin() {
+  local repo="$1" plugin_id="$2"
+  if ! have herdr; then
+    warn "herdr not installed, skipping $plugin_id (install herdr, then re-run bootstrap.sh)"
+    return
+  fi
+  if herdr plugin list --json 2>/dev/null |
+    jq -e --arg id "$plugin_id" '.result.plugins[]|select(.plugin_id==$id)' >/dev/null 2>&1; then
+    ok "$plugin_id already installed"
+    return
+  fi
+  herdr plugin install "$repo" --yes
+  ok "$plugin_id installed"
+}
+
 set_login_shell() {
   local fish_path current_shell
   fish_path="$(command -v fish || true)"
@@ -174,6 +191,7 @@ main() {
   info ""
   info "${bold}herdr plugins${reset}"
   install_herdr_automatic_rename
+  install_herdr_plugin "hhdebb/herdr-radar" "herdr-radar"
 
   info ""
   info "${bold}not handled here, install manually if you want them${reset}"
