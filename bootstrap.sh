@@ -29,6 +29,29 @@ APT_PACKAGES=(
   unzip
   jq          # needed by the herdr-automatic-rename plugin
   build-essential  # provides cc, needed to build Rust herdr plugins from source
+  # tode bundles an Electron/Chromium browser; this is the standard set of
+  # shared libs Chromium needs on Debian/Ubuntu (apt resolves the tXX/t64
+  # suffixed variants automatically on newer releases).
+  libatk1.0-0
+  libatk-bridge2.0-0
+  libgtk-3-0
+  libgbm1
+  libnss3
+  libnspr4
+  libxss1
+  libxtst6
+  libasound2t64
+  libcups2
+  libdrm2
+  libxcomposite1
+  libxdamage1
+  libxfixes3
+  libxrandr2
+  libpango-1.0-0
+  libpangocairo-1.0-0
+  libcairo2
+  fonts-liberation
+  xdg-utils
 )
 
 install_apt() {
@@ -89,6 +112,15 @@ install_roamgate() {
     https://github.com/powerfooI/roamgate/releases/latest/download/install-roamgate.sh |
     ROAMGATE_VERSION= sh
   ok "roamgate installed"
+}
+
+install_tode() {
+  if have tode; then
+    ok "tode already installed"
+    return
+  fi
+  curl -fsSL https://tode.sh/install | bash
+  ok "tode installed"
 }
 
 install_rust() {
@@ -220,6 +252,7 @@ main() {
   install_fnm
   install_bun
   install_roamgate
+  install_tode
   install_nerd_font
   install_rust
 
