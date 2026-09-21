@@ -18,7 +18,15 @@ if status is-interactive
     end
 
     # Fuzzy finder key bindings (ctrl-t, ctrl-r, alt-c)
-    type -q fzf; and fzf --fish | source
+    # `fzf --fish` needs fzf >= 0.48; older packaged versions (e.g. Debian's
+    # 0.44.1) ship a vendored fzf_key_bindings function instead.
+    if type -q fzf
+        if fzf --fish >/dev/null 2>&1
+            fzf --fish | source
+        else if functions -q fzf_key_bindings
+            fzf_key_bindings
+        end
+    end
 
     # Node version manager, switches on cd
     type -q fnm; and fnm env --use-on-cd --shell fish | source
